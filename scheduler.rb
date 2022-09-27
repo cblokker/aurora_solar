@@ -3,33 +3,27 @@ Dir["./employee/*.rb"].each {|file| require file }
 Dir["./building/*.rb"].each {|file| require file }
 
 # Note: Expected output is in the format:
-# "2022-09-28"=> {
-# #<TwoStoryHome:0x00007fdf9e920088
-#     @employees=
-#      [#<CertifiedInstaller:0x00007fdf9e923120
-#        @name="Installer-1",
-#        @scheduled_days=[],
-#        @unavailable_days=[]>,
-#       #<Laborer:0x00007fdf9e920470
-#        @name="Laborer-7",
-#        @scheduled_days=[],
-#        @unavailable_days=[]>],
-#     @is_scheduled=true,
-#     @name="TwoStoryHome-0">,
-#    #<SingleStoryHome:0x00007fdf9e92be88
-#     @employees=
-#      [#<CertifiedInstaller:0x00007fdf9e9235f8
-#        @name="Installer-0",
-#        @scheduled_days=[],
-#        @unavailable_days=[]>],
-#     @is_scheduled=true,
-#     @name="SingleStoryHome-0">],
-#  } ... "2022-09-29"=> {...}
-
-
-# {date: {buildingObject, buildingObject, ...}, ...}
-# where building object has the list of employees working on the building for
-# that given day
+# {"2022-09-27"=> [
+#   {
+#     :name => "CommercialBuilding-0",
+#     :employees=> [
+#       "Installer-11",
+#       "Installer-10",
+#       "PendingInstaller-11",
+#       "PendingInstaller-10",
+#       "Installer-9",
+#       "Installer-8",
+#       "Installer-7",
+#       "Installer-6"
+#     ]
+#    },
+#    {
+#      :name => "TwoStoryHome-0",
+#      :employees => [
+#        "Installer-5",
+#        "Laborer-11"
+#      ]
+#    }, ... {}
 
 def schedule(buildings, employees)
   start_date = Date.today
@@ -41,7 +35,7 @@ def schedule(buildings, employees)
   buildings.each do |building|
     work_week(start_date..end_date).each do |day|
       if building.schedule_employees!(available_employees[day.to_s])
-        schedule[day.to_s] << building
+        schedule[day.to_s] << building.present
       end
     end
   end

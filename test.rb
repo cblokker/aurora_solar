@@ -21,9 +21,9 @@ pp schedule(buildings1, employees1)
 
 
 
-# 2. Test assignment of two story homes
-# 2.a All buildings have expected employee types
-# 2.b No employee is working on 2 buildings in same day
+# # 2. Test assignment of two story homes
+# # 2.a All buildings have expected employee types
+# # 2.b No employee is working on 2 buildings in same day
 employees2 = []
 buildings2 = []
 
@@ -68,14 +68,14 @@ pp schedule(buildings3, employees3)
 employees4 = []
 buildings4 = []
 
-8.times do |i|
+12.times do |i|
   employees4 << CertifiedInstaller.new(name: "Installer-#{i}",)
   employees4 << Laborer.new(name: "Laborer-#{i}",)
   employees4 << InstallerPendingCertification.new(name: "PendingInstaller-#{i}",)
 end
 
 
-10.times do |i|
+24.times do |i|
   buildings4 << CommercialBuilding.new(name: "CommercialBuilding-#{i}")
   buildings4 << TwoStoryHome.new(name: "TwoStoryHome-#{i}")
   buildings4 << SingleStoryHome.new(name: "SingleStoryHome-#{i}")
@@ -89,8 +89,5 @@ pp schedule(buildings4, employees4)
 #     on days that he's available, and not on projects on days he's unavailable
 
 
-
 # 6. Todo: Unit test Employee & Building classes as well
-
-
 

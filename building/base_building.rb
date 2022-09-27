@@ -1,11 +1,3 @@
-# NOTE: Assumed dated_employees format:
-# "2022-10-01"=> {
-#  
-# }
-
-require 'pry'
-
-
 class BaseBuilding
   INSTALL_TIME = 1 # Here just to indicate install time is always 1 day.
 
@@ -32,6 +24,13 @@ class BaseBuilding
   def is_scheduled?
     is_scheduled
   end
+
+  def present
+    @present ||= {
+      name: name,
+      employees: employees.map(&:name)
+    }
+  end
 end
 
 
@@ -51,9 +50,9 @@ class CommercialBuilding < BaseBuilding
     # Note: This will exhaust certified_installers faster than laborers
     #       A more random selection may keep a more even spread
     4.times do
-      employees << dated_employees[:certified_installer].pop ||
-                   dated_employees[:installer_pending_certification].pop ||
-                   dated_employees[:laborer].pop
+      employees << (dated_employees[:certified_installer].pop ||
+                    dated_employees[:installer_pending_certification].pop ||
+                    dated_employees[:laborer].pop)
     end
   end
 end
@@ -80,8 +79,7 @@ class TwoStoryHome < BaseBuilding
 
   def assign_employees!(dated_employees)
     employees << dated_employees[:certified_installer].pop
-    employees << dated_employees[:laborer].pop ||
-                 dated_employees[:installer_pending_certification].pop
+    employees << (dated_employees[:laborer].pop ||
+                  dated_employees[:installer_pending_certification].pop)
   end
 end
-
